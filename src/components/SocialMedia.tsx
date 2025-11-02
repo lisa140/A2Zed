@@ -1,8 +1,13 @@
-import { Facebook, Github, Link, Linkedin, Slack, Youtube } from "lucide-react";
-
+import { Facebook, Github, Linkedin, Slack, Youtube } from "lucide-react";
 import React from "react";
 import { Tooltip, TooltipProvider, TooltipTrigger } from "./ui/tooltip";
-
+import { cn } from "@/lib/utils";
+import Link from "next/link";
+interface Props {
+  className?: string;
+  iconClassName?: string;
+  tooltipClassName?: string;
+}
 const socialLink = [
   {
     title: "Youtube",
@@ -25,14 +30,20 @@ const socialLink = [
     icon: <Slack className="w-5 h-5" />,
   },
 ];
-const SocialMedia = () => {
+const SocialMedia = ({ className, iconClassName, tooltipClassName }: Props) => {
   return (
     <TooltipProvider>
-      <div>
+      <div className={cn("flex items-center gap-3.5", className)}>
         {socialLink?.map((item) => (
           <Tooltip>
-            <TooltipTrigger>
-              <Link key={item?.title} href={item?.href}>
+            <TooltipTrigger asChild>
+              <Link
+                key={item?.title}
+                target="_blank"
+                rel="noopener noreferrer"
+                href={item?.href}
+                className={cn("p-2 border rounded-full")}
+              >
                 {item?.icon}
               </Link>
             </TooltipTrigger>
